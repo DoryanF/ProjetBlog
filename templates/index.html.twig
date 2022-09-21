@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1 class="titreAccueil">Bienvenue sur mon Blog !</h1>
+
+    {% for article in articles %}
+        <div class="article">
+            <div class="title"><h2>{{ article.title }}</h2></div>
+
+            {% if article.image != null %}
+                <div class="imageArticle"><img src={{ article.image }}></div>
+            {% endif %}
+
+            <div class="contenue">{{ article.content }}</div>
+            <br>
+            <a href="{{ path('app_article_show', {'id': article.id}) }}">Voir l'article</a>
+            <br>
+            <br>
+        </div>
+        
+
+    {% endfor %}
+
+{% endblock %}

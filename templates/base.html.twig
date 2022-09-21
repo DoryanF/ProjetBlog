@@ -13,6 +13,10 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    <header>
+        {% embed "nav/barre.html.twig" %}            
+        {% endembed  %}
+    </header>
     <body>
         {% block body %}{% endblock %}
     </body>

@@ -4,3 +4,14 @@ twig:
 when@test:
     twig:
         strict_variables: true
+        form_themes:
+            - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+    
+    fos_ck_editor:
+        config:
+            main_config:
+                toolbar:
+                    - { name: "styles", items: ['Bold', 'Italic', 'Underline', 'Strike', 'Blockquote', '-', 'Link', '-', 'RemoveFormat', '-','NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Image', 'Table', '-', 'Styles', 'Format', 'Font', 'FontSize', '-', 'TextColor', 'BGColor', 'Source'] }
+        configs:
+            my_config:
+                language: fr
