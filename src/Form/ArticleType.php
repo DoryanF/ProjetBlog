@@ -3,13 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Article;
-use DateTime;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+
 
 class ArticleType extends AbstractType
 {
@@ -17,13 +16,12 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('content', 'ckeditor', array(
-                'config' => array(
-                    'langage' => 'fr',
-                )
-            ))
-            ->add('image')
-            ->add('date', DateTimeType::class)
+            ->add('content', TextareaType::class, [
+                'label' => 'Contenue'
+            ])
+            ->add('file_img', FileType::class, [
+                'label' => 'Image'
+            ])
         ;
     }
 

@@ -1,14 +1,19 @@
-<nav class="navbar">
+<nav class="navbar navbar-dark bg-dark">
         {# <a href="{{ path('app_article_new') }}">Ajouter article</a> #}
         <a href="{{ path('index') }}">Accueil</a>
         {% if app.user %}
             <a href="{{ path('app_logout') }}">Déconnexion</a>
         {% else %}
-                <a href="{{ path('app_login') }}">Connexion</a>
+            <a href="{{ path('app_login') }}">Connexion/Inscription</a>
         {% endif %}
         
         <ul>
-        Bonjour {{app.user.pseudo}}
+        {% if app.user %}
+            Bonjour {{app.user.pseudo}}
+        {% else %}
+            Bonjour Visiteur
+        {% endif %}
+        
         <li>
         {% if app.user.roles[0] is same as("ROLE_ADMIN") %}
             <a href="{{ path('app_article_new') }}">Ajouter article</a>

@@ -22,7 +22,7 @@
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
                 <td>{{ article.content }}</td>
-                <td>{{ article.image }}</td>
+                <td><img src="{{ vich_uploader_asset(article, 'file_img') }}" alt=""></td>
                 <td>{{ article.date ? article.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>

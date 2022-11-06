@@ -8,7 +8,7 @@
             <div class="title"><h2>{{ article.title }}</h2></div>
 
             {% if article.image != null %}
-                <div class="imageArticle"><img src={{ article.image }}></div>
+                <div class="imageArticle"><td><img src="{{ vich_uploader_asset(article, 'file_img') }}" alt=""></td></div>
             {% endif %}
 
             <div class="contenue">{{ article.content }}</div>

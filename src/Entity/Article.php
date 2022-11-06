@@ -5,10 +5,12 @@ namespace App\Entity;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[Vich\Uploadable()]
 class Article
 {
     #[ORM\Id]
@@ -22,11 +24,14 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[Vich\UploadableField(mapping: 'article', fileNameProperty: 'image')]
+    private ?File $file_img;
+
+    #[ORM\Column(type: 'string')]
     private ?string $image = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Comments::class, mappedBy: 'article')]
     private Collection $comments;
@@ -65,6 +70,27 @@ class Article
         return $this;
     }
 
+    public function getFileImg(): ?File
+    {
+        return $this->file_img;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setFileImg(File $imageFile = null): void
+    {
+        $this->file_img = $imageFile;
+        
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+
     public function getImage(): ?string
     {
         return $this->image;
@@ -77,17 +103,31 @@ class Article
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    /**
+     * Get the value of updatedAt
+     *
+     * @return  \DateTimeInterface|null
+     */ 
+    public function getUpdatedAt()
     {
-        return $this->date;
+        return $this->updatedAt;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    /**
+     * Set the value of updatedAt
+     *
+     * @param  \DateTimeInterface|null  $updatedAt
+     *
+     * @return  self
+     */ 
+    public function setUpdatedAt($updatedAt)
     {
-        $this->date = $date;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
+
+
 
     /**
      * @return Collection<int, Comments>
